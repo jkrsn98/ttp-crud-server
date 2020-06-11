@@ -2,36 +2,16 @@ var express = require("express");
 var router = express.Router();
 const { Campus } = require("../database/models");
 
-const mockCampusesArray = [
-  {
-    id: "3434454",
-    name: "Brooklyn College",
-    address: "Brooklyn",
-    imageUrl: "",
-    description: "A college in Brooklyn",
-  },
-  {
-    id: "3434455",
-    name: "CSI",
-    address: "Staten Island",
-    imageUrl: "",
-    description: "A college in Staten Island",
-  },
-  {
-    id: "3434457",
-    name: "John Jay",
-    address: "New York",
-    imageUrl: "",
-    description: "A college in Manhattan",
-  },
-];
 
 /* GET all campuses. */
-router.get("/", (req, res, next) => {
-  // Campus.findAll()
-  //   .then((campuses) => res.json(campuses))
-  //   .catch((err) => console.log(err));
-  res.json(mockCampusesArray);
+router.get("/", async (req, res, next) => {
+
+  try{
+    const campuses = await Campus.findAll()
+    res.status(200).json(campuses);
+  }catch(err){
+    next(err)
+  }
 });
 
 // Route to serve single campus based on its id
